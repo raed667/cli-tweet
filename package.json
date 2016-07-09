@@ -1,7 +1,7 @@
 {
-  "name": "tweet-terminal",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cli-tweet",
+  "version": "0.0.1",
+  "description": "Pipe tweets in the terminal",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,10 @@
   "keywords": [
     "twitter"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RaedsLab/cli-tweet.git"
+  },
   "author": "Raed Chammam",
   "license": "MIT",
   "dependencies": {

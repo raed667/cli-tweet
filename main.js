@@ -45,7 +45,7 @@ function getAccessToken(oa, oauth_token, oauth_token_secret, pin) {
             });
             fs.writeFileSync(CONFIG_FILE, JSON.stringify(keys));
             console.log('You can now start piping tweets.'.bold.cyan);
-            console.log('Try echo "test" | tweet '.cyan);
+            console.log('Try echo "test" | cli-tweet'.cyan);
             process.exit(1);
         });
 }
@@ -119,7 +119,7 @@ if (isConfig === undefined || isConfig.toLowerCase() != "config") {
             console.log(JSON.stringify(e));
         }
     } else {
-        console.log("Try running 'tweet config' command".bold.red);
+        console.log("Try running 'cli-tweet config' command".bold.red);
     }
 } else {
     // Get a twitter pin
