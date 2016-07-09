@@ -16,8 +16,10 @@ var ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token';
 var OAUTH_VERSION = '1.0';
 var HASH_VERSION = 'HMAC-SHA1';
 
+// Tokens from the application "RaedLab" feel free to use them if you don't want to create a Twitter app
 var key = "TtEmoPUPTozWyMUvPJael3U1R";
 var secret = "q9cuovWtbz7Zu2L9wVuBzFTZizg3wN9JoEMtciCImCgIAT9y6K";
+
 var tweetText;
 
 
