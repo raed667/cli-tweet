@@ -4,7 +4,7 @@ var OAuth = require('oauth').OAuth,
     fs = require('fs'),
     get_args = require('cli-pipe');
 
-var CONFIG_FILE = 'tweet.json',
+var CONFIG_FILE = '.tweet.json',
     REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token',
     ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token',
     OAUTH_VERSION = '1.0', HASH_VERSION = 'HMAC-SHA1';
