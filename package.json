@@ -1,6 +1,6 @@
 {
   "name": "cli-tweet",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Pipe tweets in the terminal",
   "main": "main.js",
   "scripts": {
