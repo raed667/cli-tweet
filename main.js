@@ -3,17 +3,17 @@ var OAuth = require('oauth').OAuth,
     Twitter = require('twitter'),
     fs = require('fs'),
     get_args = require('cli-pipe');
-const CONFIG_FILE = '.tweet.json',
 
+const CONFIG_FILE = '.tweet.json',
     REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token',
     ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token',
     OAUTH_VERSION = '1.0',
     HASH_VERSION = 'HMAC-SHA1';
 
-const key = "TtEmoPUPTozWyMUvPJael3U1R", // Tokens from the application "RaedLab" feel free to use them if you don't want to create a Twitter app
-    secret = "q9cuovWtbz7Zu2L9wVuBzFTZizg3wN9JoEMtciCImCgIAT9y6K";
 
-let tweetText = "";
+/** Tokens from the application "RaedLab" feel free to use them if you don't want to create a Twitter app **/
+const key = "TtEmoPUPTozWyMUvPJael3U1R",
+    secret = "q9cuovWtbz7Zu2L9wVuBzFTZizg3wN9JoEMtciCImCgIAT9y6K";
 
 function getAccessToken(oa, oauth_token, oauth_token_secret, pin) {
     oa.getOAuthAccessToken(oauth_token, oauth_token_secret, pin,
@@ -52,7 +52,7 @@ function getRequestToken(oa) {
     });
 }
 
-function tweet(userTokens) {
+function tweet(userTokens, tweetText) {
     var client = new Twitter({
         consumer_key: key,
         consumer_secret: secret,
@@ -60,7 +60,7 @@ function tweet(userTokens) {
         access_token_secret: userTokens.oauth_access_token_secret
     });
     console.log("Tweeting :" + tweetText.bold.cyan);
-    if (tweetText.length > 0) {
+    if (tweetText !== null) {
         client.post('statuses/update', {
             status: tweetText
         }, function(error, tweet, response) {
@@ -85,11 +85,15 @@ if (isConfig === undefined || isConfig.toLowerCase() != "config") {
     if (tokens != undefined && (tokens.ACCESS_TOKEN_KEY != undefined && tokens.ACCESS_TOKEN_SECRET != undefined)) {
         try {
             get_args(function(args) {
-                tweetText = args[2];
-                tweet({
-                    "oauth_access_token": tokens.ACCESS_TOKEN_KEY,
-                    "oauth_access_token_secret": tokens.ACCESS_TOKEN_SECRET
-                });
+                let tweetText = args[2];
+                if (tweetText.length > 0) {
+                    tweet({
+                        "oauth_access_token": tokens.ACCESS_TOKEN_KEY,
+                        "oauth_access_token_secret": tokens.ACCESS_TOKEN_SECRET
+                    }, tweetText);
+                } else {
+                    console.log("Error: Pipe a tweet".bold.red);
+                }
             });
         } catch (e) {
             console.log("Error: Unexpected error while tweeting".bold.red);
