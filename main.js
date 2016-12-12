@@ -10,7 +10,6 @@ const CONFIG_FILE = '.tweet.json',
     OAUTH_VERSION = '1.0',
     HASH_VERSION = 'HMAC-SHA1';
 
-
 /** Tokens from the application "RaedLab" feel free to use them if you don't want to create a Twitter app **/
 const key = "TtEmoPUPTozWyMUvPJael3U1R",
     secret = "q9cuovWtbz7Zu2L9wVuBzFTZizg3wN9JoEMtciCImCgIAT9y6K";
@@ -74,7 +73,7 @@ function tweet(userTokens, tweetText) {
     }
 }
 
-var isConfig = process.argv[2];
+const isConfig = process.argv[2];
 if (isConfig === undefined || isConfig.toLowerCase() != "config") {
     try {
         var contents = fs.readFileSync(CONFIG_FILE).toString(),
