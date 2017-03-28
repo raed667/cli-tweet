@@ -84,7 +84,7 @@ if (isConfig === undefined || isConfig.toLowerCase() != "config") {
     if (tokens != undefined && (tokens.ACCESS_TOKEN_KEY != undefined && tokens.ACCESS_TOKEN_SECRET != undefined)) {
         try {
             get_args(function(args) {
-                let tweetText = args[2];
+                const tweetText = args[2];
                 if (tweetText.length > 0) {
                     tweet({
                         "oauth_access_token": tokens.ACCESS_TOKEN_KEY,
