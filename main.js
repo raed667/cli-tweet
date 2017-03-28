@@ -2,9 +2,10 @@ var OAuth = require('oauth').OAuth,
     colors = require('colors'),
     Twitter = require('twitter'),
     fs = require('fs'),
-    get_args = require('cli-pipe');
+    get_args = require('cli-pipe'),
+    os = require('os');
 
-const CONFIG_FILE = '.tweet.json',
+const CONFIG_FILE = os.homedir() + '/.tweet.json',
     REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token',
     ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token',
     OAUTH_VERSION = '1.0',
@@ -16,7 +17,7 @@ const key = "TtEmoPUPTozWyMUvPJael3U1R",
 
 function getAccessToken(oa, oauth_token, oauth_token_secret, pin) {
     oa.getOAuthAccessToken(oauth_token, oauth_token_secret, pin,
-        function(error, oauth_access_token, oauth_access_token_secret, results2) {
+        function (error, oauth_access_token, oauth_access_token_secret, results2) {
             if (error && parseInt(error.statusCode) == 401) {
                 throw new Error('The pin number you have entered is incorrect'.bold.red);
             }
@@ -24,10 +25,12 @@ function getAccessToken(oa, oauth_token, oauth_token_secret, pin) {
                 'ACCESS_TOKEN_KEY': oauth_access_token,
                 'ACCESS_TOKEN_SECRET': oauth_access_token_secret
             };
-            fs.open(CONFIG_FILE, "wx", function(err, fd) {
+            fs.open(CONFIG_FILE, "wx", function (err, fd) {
                 try {
-                    fs.close(fd, function(err) {});
-                } catch (e) {}
+                    fs.close(fd, function (err) {
+                    });
+                } catch (e) {
+                }
             });
             fs.writeFileSync(CONFIG_FILE, JSON.stringify(keys));
             console.log('Try echo "Test tweet" | tweet'.cyan);
@@ -36,14 +39,14 @@ function getAccessToken(oa, oauth_token, oauth_token_secret, pin) {
 }
 
 function getRequestToken(oa) {
-    oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results) {
+    oa.getOAuthRequestToken(function (error, oauth_token, oauth_token_secret, results) {
         if (error) {
             throw new Error(([error.statusCode, error.data].join(': ')).bold.red);
         } else {
             console.log(('https://twitter.com/oauth/authorize?oauth_token=' + oauth_token).underline.blue)
             console.log('Enter the pin number here:'.bold.yellow);
             var stdin = process.openStdin();
-            stdin.on('data', function(chunk) {
+            stdin.on('data', function (chunk) {
                 var pin = chunk.toString().trim();
                 getAccessToken(oa, oauth_token, oauth_token_secret, pin);
             });
@@ -62,7 +65,7 @@ function tweet(userTokens, tweetText) {
     if (tweetText !== null) {
         client.post('statuses/update', {
             status: tweetText
-        }, function(error, tweet, response) {
+        }, function (error, tweet, response) {
             if (error) {
                 console.log("Error :" + JSON.stringify(error));
             }
@@ -83,7 +86,7 @@ if (isConfig === undefined || isConfig.toLowerCase() != "config") {
     }
     if (tokens != undefined && (tokens.ACCESS_TOKEN_KEY != undefined && tokens.ACCESS_TOKEN_SECRET != undefined)) {
         try {
-            get_args(function(args) {
+            get_args(function (args) {
                 const tweetText = args[2];
                 if (tweetText.length > 0) {
                     tweet({
